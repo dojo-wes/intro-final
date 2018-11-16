@@ -1,14 +1,21 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // build initial table with seed data
   buildCharacterTable(seedData);
 
-  // reverse list when reverse button is clicked
-  $('#reverse').click(function() {
-    updateCharacterTable(yellow.reverseArr(seedData));
+  // filter by name when key is pressed
+  $('#user-input').keyup(function() {
+    var result = [];
+    for(var i = 0; i < seedData.length; i++) {
+      // convert values to lowercase for "case insensitivity"
+      if(red.isStringMatching(seedData[i].name.toLowerCase(), $('#user-input').val().toLowerCase())) {
+        result.push(seedData[i]);
+      }
+    }
+    updateCharacterTable(result);
   });
 
   // sort by column when column header is clicked
-  $('.sort').click(function() {
+  $('.sort').click(function () {
     var key = $(this).attr('data-column');
     var order = $(this).attr('data-order');
     var newOrder = order === "true" ? "false" : "true";
@@ -19,9 +26,9 @@ $(document).ready(function() {
 
 // Helper functions for later use
 function buildCharacterTable(data) {
-  for (var i = 0; i < data.length; i++) {
-    $('.people tbody').append(yellow.generateRow(data[i]));
-  }
+  red.generateRowArray(data).forEach(function(row) {
+    $('.people tbody').append(row);
+  });
 }
 
 function updateCharacterTable(updatedData) {
@@ -32,7 +39,7 @@ function updateCharacterTable(updatedData) {
 function sortByColumn(key, order) {
   clearTable();
   order = order === "true" ? true : false;
-  updateCharacterTable(yellow.bubbleSort(seedData, key, order));
+  updateCharacterTable(red.insertionSort(seedData, key, order));
 }
 
 function clearTable() {

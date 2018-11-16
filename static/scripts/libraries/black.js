@@ -11,9 +11,19 @@ var black = (function () {
 
   }
 
+  function isStringMatching(str, testStr) {
+
+  }
+
+  function generateRow(currentPerson) {
+
+  }
+
   return {
     map: map,
     filter: filter,
     exclude: exclude,
+    isStringMatching: isStringMatching,
+    generateRow: generateRow,
   }
 })();
